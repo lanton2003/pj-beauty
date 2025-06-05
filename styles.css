@@ -448,6 +448,29 @@ footer {
         right: -100%;
     }
 
+    .cart-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .cart-item-image {
+        width: 120px;
+        height: 120px;
+    }
+
+    .cart-item-details {
+        width: 100%;
+    }
+
+    .cart-item-quantity {
+        justify-content: center;
+    }
+
+    .remove-item {
+        margin-top: 10px;
+    }
+
     /* Newsletter Section */
     .newsletter-form {
         flex-direction: column;
