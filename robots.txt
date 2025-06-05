@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /private/
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://jellybeauty.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10 
