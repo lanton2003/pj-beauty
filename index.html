@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelly Beauty Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="filter-tabs">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="bags">Bags</button>
+            <button class="filter-btn" data-filter="backpacks">Backpacks</button>
+            <button class="filter-btn" data-filter="handbags">Handbags</button>
+        </div>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>Jelly Beauty</h1>
+            </div>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="#products">Products</a>
+                    <div class="dropdown-content">
+                        <a href="#all">All Products</a>
+                        <a href="#backpacks">Backpacks</a>
+                        <a href="#handbags">Handbags</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#contact">Contact</a>
+                    <div class="dropdown-content">
+                        <a href="tel:+254707041000"><i class="fas fa-phone"></i> +254 707 041 000</a>
+                        <a href="mailto:info@jellybeauty.com"><i class="fas fa-envelope"></i> info@jellybeauty.com</a>
+                        <a href="https://wa.me/254707041000" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" id="search-toggle"><i class="fas fa-search"></i></a>
+                <a href="#cart"><i class="fas fa-shopping-cart"></i></a>
+                <a href="#account"><i class="fas fa-user"></i></a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay">
+        <div class="search-container">
+            <form id="search-form">
+                <input type="text" id="search-input" placeholder="Search for products...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <button id="close-search" class="close-search"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+
+    <main>
+        <section id="hero">
+            <div class="hero-content">
+                <div class="glitter-container">
+                    <h2 class="glitter-text">Welcome to Jelly Beauty</h2>
+                </div>
+                <p>Discover our premium collection of beauty products</p>
+                <a href="#products" class="cta-button">Shop Now</a>
+            </div>
+        </section>
+
+        <section id="featured-products">
+            <h2>Featured Products</h2>
+            <div class="product-grid">
+                <div class="product-card special-product">
+                    <div class="image-gallery">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_20250601_160831_539.jpg" alt="Grey Backpack View 1" class="gallery-img active" loading="lazy" width="180" height="180">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_20250601_160843_009.jpg" alt="Grey Backpack View 2" class="gallery-img" loading="lazy" width="180" height="180">
+                        <div class="gallery-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="product-tags">
+                        <span class="tag">bags</span>
+                        <span class="tag">backpacks</span>
+                    </div>
+                    <h3>Premium Grey Backpack</h3>
+                    <p class="description">Stylish and durable grey backpack with multiple compartments</p>
+                    <p class="price">KES 2,500</p>
+                    <p class="stock">In Stock: <span class="stock-count">1</span> unit</p>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn minus">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1" max="1">
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <div class="image-gallery">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_20250601_160904_652.jpg" alt="Black Handbag View 1" class="gallery-img active">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_20250601_160904_652.jpg" alt="Black Handbag View 2" class="gallery-img">
+                        <div class="gallery-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="product-tags">
+                        <span class="tag">bags</span>
+                        <span class="tag">handbags</span>
+                    </div>
+                    <h3>Elegant Black Handbag</h3>
+                    <p class="description">Classic black handbag with premium finish and spacious interior</p>
+                    <p class="price">KES 2,500</p>
+                    <p class="stock">In Stock: <span class="stock-count">1</span> unit</p>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn minus">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1" max="1">
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product-card special-product">
+                    <div class="image-gallery">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_20250601_161015_947.jpg" alt="Brown Handbag View 1" class="gallery-img active">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_20250601_161023_101.jpg" alt="Brown Handbag View 2" class="gallery-img">
+                        <div class="gallery-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="product-tags">
+                        <span class="tag">bags</span>
+                        <span class="tag">handbags</span>
+                    </div>
+                    <h3>Classic Brown Handbag</h3>
+                    <p class="description">Elegant brown handbag with premium leather finish</p>
+                    <p class="price">KES 2,500</p>
+                    <p class="stock">In Stock: <span class="stock-count">1</span> unit</p>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn minus">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1" max="1">
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product-card special-product">
+                    <div class="image-gallery">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_20250601_161048_682.jpg" alt="Classic Small Handbag View 1" class="gallery-img active">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_20250601_161055_824.jpg" alt="Classic Small Handbag View 2" class="gallery-img">
+                        <div class="gallery-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="product-tags">
+                        <span class="tag">bags</span>
+                        <span class="tag">handbags</span>
+                    </div>
+                    <h3>Classic Small Handbag</h3>
+                    <p class="description">Elegant small handbag perfect for everyday use</p>
+                    <p class="price">KES 2,000</p>
+                    <p class="stock">In Stock: <span class="stock-count">1</span> unit</p>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn minus">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1" max="1">
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product-card special-product">
+                    <div class="image-gallery">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_20250601_161122_894.jpg" alt="Flashy Chanel Handbag View 1" class="gallery-img active">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_20250601_161203_632.jpg" alt="Flashy Chanel Handbag View 2" class="gallery-img">
+                        <div class="gallery-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="product-tags">
+                        <span class="tag">bags</span>
+                        <span class="tag">handbags</span>
+                    </div>
+                    <h3>Flashy Chanel Handbag</h3>
+                    <p class="description">Luxurious and eye-catching Chanel-inspired handbag</p>
+                    <p class="price">KES 2,500</p>
+                    <p class="stock">In Stock: <span class="stock-count">1</span> unit</p>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn minus">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1" max="1">
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+                <div class="product-card special-product">
+                    <div class="image-gallery">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_20250601_161235_092.jpg" alt="LV Handbag View 1" class="gallery-img active">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_20250601_161226_302.jpg" alt="LV Handbag View 2" class="gallery-img">
+                        <div class="gallery-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="product-tags">
+                        <span class="tag">bags</span>
+                        <span class="tag">handbags</span>
+                    </div>
+                    <h3>LV Handbag</h3>
+                    <p class="description">Elegant Louis Vuitton-inspired handbag with premium finish</p>
+                    <p class="price">KES 2,500</p>
+                    <p class="stock">In Stock: <span class="stock-count">1</span> unit</p>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn minus">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1" max="1">
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="newsletter">
+            <div class="newsletter-content">
+                <h2>Join Our Newsletter</h2>
+                <p>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email">
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Image Hover Overlay -->
+    <div class="image-hover-overlay">
+        <button class="close-hover"><i class="fas fa-times"></i></button>
+        <div class="hover-images-container">
+            <!-- Images will be dynamically added here -->
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Jelly Beauty Shop is your one-stop destination for premium beauty products.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#shipping">Shipping Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Jelly Beauty Shop. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
