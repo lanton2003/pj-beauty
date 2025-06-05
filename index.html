@@ -40,9 +40,11 @@
     <!-- Search Overlay -->
     <div id="search-overlay" class="search-overlay">
         <div class="search-container">
-            <input type="text" placeholder="Search for beauty products...">
-            <button><i class="fas fa-search"></i></button>
             <button class="close-search"><i class="fas fa-times"></i></button>
+            <div class="search-input-group">
+                <input type="text" placeholder="Search for beauty products...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
         </div>
     </div>
 
@@ -82,7 +84,10 @@
                             <input type="number" class="quantity-input" value="1" min="1" max="1">
                             <button class="quantity-btn plus">+</button>
                         </div>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="product-buttons">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="buy-now">Buy Now</button>
+                        </div>
                     </div>
                 </div>
                 <div class="product-card">
@@ -107,7 +112,10 @@
                             <input type="number" class="quantity-input" value="1" min="1" max="1">
                             <button class="quantity-btn plus">+</button>
                         </div>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="product-buttons">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="buy-now">Buy Now</button>
+                        </div>
                     </div>
                 </div>
                 <div class="product-card">
@@ -132,7 +140,10 @@
                             <input type="number" class="quantity-input" value="1" min="1" max="1">
                             <button class="quantity-btn plus">+</button>
                         </div>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="product-buttons">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="buy-now">Buy Now</button>
+                        </div>
                     </div>
                 </div>
                 <div class="product-card">
@@ -157,13 +168,16 @@
                             <input type="number" class="quantity-input" value="1" min="1" max="1">
                             <button class="quantity-btn plus">+</button>
                         </div>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="product-buttons">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="buy-now">Buy Now</button>
+                        </div>
                     </div>
                 </div>
                 <div class="product-card">
                     <div class="image-gallery">
-                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958251096.webp" alt="Grey Backpack View 1" class="gallery-img active">
-                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958255337.webp" alt="Grey Backpack View 2" class="gallery-img">
+                        <img src="images/grey-backpack-1.webp" alt="Grey Backpack View 1" class="gallery-img active">
+                        <img src="images/grey-backpack-2.webp" alt="Grey Backpack View 2" class="gallery-img">
                         <div class="gallery-dots">
                             <span class="dot active"></span>
                             <span class="dot"></span>
@@ -182,7 +196,10 @@
                             <input type="number" class="quantity-input" value="1" min="1" max="1">
                             <button class="quantity-btn plus">+</button>
                         </div>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="product-buttons">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="buy-now">Buy Now</button>
+                        </div>
                     </div>
                 </div>
                 <div class="product-card">
@@ -205,33 +222,37 @@
                             <input type="number" class="quantity-input" value="1" min="1" max="1">
                             <button class="quantity-btn plus">+</button>
                         </div>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <div class="product-buttons">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="buy-now">Buy Now</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-    </main>
 
-    <!-- Cart View Overlay -->
-    <div id="cart-overlay" class="cart-overlay">
-        <div class="cart-container">
-            <div class="cart-header">
-                <h2>Your Cart</h2>
-                <button class="close-cart"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="cart-items">
-                <!-- Cart items will be dynamically added here -->
-            </div>
-            <div class="cart-summary">
-                <div class="cart-total">
-                    <span>Total:</span>
-                    <span class="total-amount">KES 0</span>
+        <!-- Cart View Overlay -->
+        <div id="cart-overlay" class="cart-overlay">
+            <div class="cart-container">
+                <div class="cart-header">
+                    <h2>Your Cart</h2>
+                    <button class="close-cart"><i class="fas fa-times"></i></button>
                 </div>
-                <button class="checkout-btn">Proceed to Checkout</button>
+                <div class="cart-items">
+                    <!-- Cart items will be dynamically added here -->
+                </div>
+                <div class="cart-summary">
+                    <div class="cart-total">
+                        <span>Total:</span>
+                        <span class="total-amount">KES 0</span>
+                    </div>
+                    <button class="checkout-btn">Proceed to Checkout</button>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -268,6 +289,31 @@
             <p>&copy; 2024 Jelly Beauty Shop. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <button class="chat-toggle">
+            <i class="fab fa-whatsapp"></i>
+            <span class="notification-badge">0</span>
+        </button>
+        <div class="chat-container">
+            <div class="chat-header">
+                <h3>Chat with Seller</h3>
+                <button class="close-chat"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-messages">
+                <div class="message system">
+                    Welcome to Jelly Beauty Shop! How can we help you today?
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message...">
+                <button class="send-message">
+                    <i class="fab fa-whatsapp"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

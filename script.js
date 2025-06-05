@@ -174,6 +174,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Buy Now functionality
+    document.querySelectorAll('.buy-now').forEach(button => {
+        button.addEventListener('click', function() {
+            const productCard = this.closest('.product-card');
+            const product = {
+                name: productCard.querySelector('h3').textContent,
+                price: productCard.querySelector('.price').textContent,
+                quantity: parseInt(productCard.querySelector('.quantity-input').value),
+                image: productCard.querySelector('.gallery-img.active').src
+            };
+
+            // Clear cart and add only this product
+            cart = [product];
+            updateCartCount();
+            
+            // Show cart and proceed to checkout
+            cartOverlay.classList.add('active');
+            updateCartView();
+            
+            // Automatically click checkout button after a short delay
+            setTimeout(() => {
+                document.querySelector('.checkout-btn').click();
+            }, 500);
+        });
+    });
+
     // Quantity selector functionality
     document.querySelectorAll('.quantity-selector').forEach(selector => {
         const minusBtn = selector.querySelector('.minus');
@@ -366,4 +392,153 @@ document.querySelectorAll('.nav-links a').forEach(link => {
         icon.classList.add('fa-bars');
         icon.classList.remove('fa-times');
     });
+});
+
+// Chat functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const chatToggle = document.querySelector('.chat-toggle');
+    const chatContainer = document.querySelector('.chat-container');
+    const closeChat = document.querySelector('.close-chat');
+    const chatInput = document.querySelector('.chat-input input');
+    const sendButton = document.querySelector('.send-message');
+    const chatMessages = document.querySelector('.chat-messages');
+    const notificationBadge = document.querySelector('.notification-badge');
+    
+    let unreadMessages = 0;
+    const whatsappNumber = '254707041000'; // Your WhatsApp number
+
+    // Toggle chat window
+    chatToggle.addEventListener('click', () => {
+        chatContainer.classList.toggle('active');
+        if (chatContainer.classList.contains('active')) {
+            unreadMessages = 0;
+            updateNotificationBadge();
+        }
+    });
+
+    // Close chat window
+    closeChat.addEventListener('click', () => {
+        chatContainer.classList.remove('active');
+    });
+
+    // Send message
+    function sendMessage() {
+        const message = chatInput.value.trim();
+        if (message) {
+            // Add user message to chat
+            addMessage(message, 'user');
+            
+            // Clear input
+            chatInput.value = '';
+
+            // Send to WhatsApp
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    }
+
+    // Send message on button click
+    sendButton.addEventListener('click', sendMessage);
+
+    // Send message on Enter key
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    // Add message to chat
+    function addMessage(text, type) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${type}`;
+        messageDiv.textContent = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        // Update notification badge if chat is closed
+        if (!chatContainer.classList.contains('active') && type === 'seller') {
+            unreadMessages++;
+            updateNotificationBadge();
+        }
+    }
+
+    // Update notification badge
+    function updateNotificationBadge() {
+        if (unreadMessages > 0) {
+            notificationBadge.textContent = unreadMessages;
+            notificationBadge.style.display = 'flex';
+        } else {
+            notificationBadge.style.display = 'none';
+        }
+    }
+
+    // Simulate seller response (for demo purposes)
+    function simulateSellerResponse() {
+        setTimeout(() => {
+            addMessage('Thank you for your message! We will get back to you shortly.', 'seller');
+        }, 1000);
+    }
+
+    // Listen for messages from WhatsApp (this would need to be implemented with a backend service)
+    // For demo purposes, we'll simulate a response
+    sendButton.addEventListener('click', simulateSellerResponse);
+});
+
+// Mobile Carousel Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const track = document.querySelector('.carousel-track');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentIndex = 0;
+    let startX, moveX;
+    let isDragging = false;
+
+    // Touch events for mobile swipe
+    track.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+    });
+
+    track.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        moveX = e.touches[0].clientX;
+        const diff = moveX - startX;
+        track.style.transform = `translateX(${diff}px)`;
+    });
+
+    track.addEventListener('touchend', () => {
+        isDragging = false;
+        const diff = moveX - startX;
+        
+        if (Math.abs(diff) > 50) { // Minimum swipe distance
+            if (diff > 0 && currentIndex > 0) {
+                currentIndex--;
+            } else if (diff < 0 && currentIndex < slides.length - 1) {
+                currentIndex++;
+            }
+        }
+        
+        updateCarousel();
+    });
+
+    // Dot navigation
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentIndex = index;
+            updateCarousel();
+        });
+    });
+
+    function updateCarousel() {
+        const offset = -currentIndex * 100;
+        track.style.transform = `translateX(${offset}%)`;
+        
+        // Update active dot
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+    }
+
+    // Initialize carousel
+    updateCarousel();
 }); 
