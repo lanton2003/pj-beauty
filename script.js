@@ -419,7 +419,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Toggle chat window
     whatsappButton.addEventListener('click', () => {
         chatContainer.classList.add('active');
-        whatsappButton.style.display = 'none'; // Hide WhatsApp button when chat is open
+        whatsappButton.classList.add('hidden'); // Use class instead of style
         if (chatContainer.classList.contains('active')) {
             unreadMessages = 0;
             updateNotificationBadge();
@@ -429,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close chat window
     closeChat.addEventListener('click', () => {
         chatContainer.classList.remove('active');
-        whatsappButton.style.display = 'flex'; // Show WhatsApp button when chat is closed
+        whatsappButton.classList.remove('hidden'); // Remove class instead of style
     });
 
     // Send message
