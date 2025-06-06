@@ -356,39 +356,56 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Mobile Menu Toggle
-const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-const navLinks = document.querySelector('.nav-links');
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    const dropdowns = document.querySelectorAll('.dropdown');
 
-mobileMenuBtn.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    const icon = mobileMenuBtn.querySelector('i');
-    icon.classList.toggle('fa-bars');
-    icon.classList.toggle('fa-times');
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-        navLinks.classList.remove('active');
+    // Toggle mobile menu
+    mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
         const icon = mobileMenuBtn.querySelector('i');
-        icon.classList.add('fa-bars');
-        icon.classList.remove('fa-times');
-    }
-});
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+    });
 
-// Close mobile menu when clicking a link
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        const icon = mobileMenuBtn.querySelector('i');
-        icon.classList.add('fa-bars');
-        icon.classList.remove('fa-times');
+    // Handle dropdowns in mobile view
+    dropdowns.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.dropdown-trigger');
+        trigger.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                dropdown.classList.toggle('active');
+            }
+        });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+            navLinks.classList.remove('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+            dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            navLinks.classList.remove('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+            dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+        }
     });
 });
 
 // Chat functionality
 document.addEventListener('DOMContentLoaded', function() {
-    const chatToggle = document.querySelector('.chat-toggle');
+    const whatsappButton = document.querySelector('.floating-whatsapp');
     const chatContainer = document.querySelector('.chat-container');
     const closeChat = document.querySelector('.close-chat');
     const chatInput = document.querySelector('.chat-input input');
@@ -400,7 +417,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const whatsappNumber = '254707041000'; // Your WhatsApp number
 
     // Toggle chat window
-    chatToggle.addEventListener('click', () => {
+    whatsappButton.addEventListener('click', () => {
         chatContainer.classList.toggle('active');
         if (chatContainer.classList.contains('active')) {
             unreadMessages = 0;
@@ -533,4 +550,58 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize carousel
     updateCarousel();
+});
+
+// Celebration Animation
+function createCelebration(x, y) {
+    const emojis = ['🎉', '✨', '🎊', '🌟', '💫', '🎈', '🎁', '🎯', '🎨', '🎭', '🎪', '🎡', '🎠', '🎢', '🎪', '🎨', '🎭', '🎪', '🎡', '🎠'];
+    const container = document.createElement('div');
+    container.className = 'celebration-container';
+    document.body.appendChild(container);
+
+    // Create 30 emojis
+    for (let i = 0; i < 30; i++) {
+        const emoji = document.createElement('div');
+        emoji.className = 'celebration-emoji';
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        
+        // Random starting position around the click point
+        const angle = (Math.random() * Math.PI * 2);
+        const distance = Math.random() * 100;
+        const startX = x + Math.cos(angle) * distance;
+        const startY = y + Math.sin(angle) * distance;
+        
+        // Random end position (spread all over the screen)
+        const endX = (Math.random() - 0.5) * window.innerWidth * 2;
+        const endY = (Math.random() - 0.5) * window.innerHeight * 2;
+        
+        // Random rotation
+        const rotation = (Math.random() - 0.5) * 720; // Random rotation between -360 and 360 degrees
+        
+        emoji.style.left = `${startX}px`;
+        emoji.style.top = `${startY}px`;
+        emoji.style.setProperty('--tx', `${endX}px`);
+        emoji.style.setProperty('--ty', `${endY}px`);
+        emoji.style.setProperty('--tr', `${rotation}deg`);
+        
+        // Random animation duration between 3 and 4 seconds
+        emoji.style.animationDuration = `${3 + Math.random()}s`;
+        
+        container.appendChild(emoji);
+    }
+
+    // Remove the container after animation
+    setTimeout(() => {
+        container.remove();
+    }, 4000);
+}
+
+// Add click event listener to Shop Now buttons
+document.addEventListener('DOMContentLoaded', function() {
+    const shopNowButton = document.querySelector('.cta-button');
+    if (shopNowButton) {
+        shopNowButton.addEventListener('click', (e) => {
+            createCelebration(e.clientX, e.clientY);
+        });
+    }
 }); 

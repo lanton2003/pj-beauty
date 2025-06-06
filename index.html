@@ -28,7 +28,7 @@
             <div class="nav-links">
                 <a href="#home">Home</a>
                 <a href="#products">Products</a>
-                <a href="#about">About</a>
+                <a href="#about" data-tooltip="Jelly Beauty Shop offers premium bags and accessories. We provide high-quality fashion items with excellent customer service and fast delivery across Kenya.">About</a>
                 <div class="dropdown">
                     <a href="#contact" class="dropdown-trigger">Contact</a>
                     <div class="dropdown-content">
@@ -72,8 +72,8 @@
             <div class="product-grid">
                 <div class="product-card">
                     <div class="image-gallery">
-                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958225520.webp" alt="LV Bag View 1" class="gallery-img active">
-                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958231121.webp" alt="LV Bag View 2" class="gallery-img">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958225520.webp" alt="LV Bag View 1" class="gallery-img active" loading="lazy">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958231121.webp" alt="LV Bag View 2" class="gallery-img" loading="lazy">
                         <div class="gallery-dots">
                             <span class="dot active"></span>
                             <span class="dot"></span>
@@ -100,8 +100,8 @@
                 </div>
                 <div class="product-card">
                     <div class="image-gallery">
-                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958236452.webp" alt="Red Multi Handbag View 1" class="gallery-img active">
-                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958247615.webp" alt="Red Multi Handbag View 2" class="gallery-img">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958236452.webp" alt="Red Multi Handbag View 1" class="gallery-img active" loading="lazy">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958247615.webp" alt="Red Multi Handbag View 2" class="gallery-img" loading="lazy">
                         <div class="gallery-dots">
                             <span class="dot active"></span>
                             <span class="dot"></span>
@@ -128,8 +128,8 @@
                 </div>
                 <div class="product-card">
                     <div class="image-gallery">
-                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958243814.webp" alt="CC Beige Handbag View 1" class="gallery-img active">
-                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958240243.webp" alt="CC Beige Handbag View 2" class="gallery-img">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958243814.webp" alt="CC Beige Handbag View 1" class="gallery-img active" loading="lazy">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958240243.webp" alt="CC Beige Handbag View 2" class="gallery-img" loading="lazy">
                         <div class="gallery-dots">
                             <span class="dot active"></span>
                             <span class="dot"></span>
@@ -156,8 +156,8 @@
                 </div>
                 <div class="product-card">
                     <div class="image-gallery">
-                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958251096.webp" alt="Leather Handbag View 1" class="gallery-img active">
-                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958255337.webp" alt="Leather Handbag View 2" class="gallery-img">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958251096.webp" alt="Leather Handbag View 1" class="gallery-img active" loading="lazy">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958255337.webp" alt="Leather Handbag View 2" class="gallery-img" loading="lazy">
                         <div class="gallery-dots">
                             <span class="dot active"></span>
                             <span class="dot"></span>
@@ -184,8 +184,8 @@
                 </div>
                 <div class="product-card">
                     <div class="image-gallery">
-                        <img src="images/grey-backpack-1.webp" alt="Grey Backpack View 1" class="gallery-img active">
-                        <img src="images/grey-backpack-2.webp" alt="Grey Backpack View 2" class="gallery-img">
+                        <img src="images/grey-backpack-1.webp" alt="Grey Backpack View 1" class="gallery-img active" loading="lazy">
+                        <img src="images/grey-backpack-2.webp" alt="Grey Backpack View 2" class="gallery-img" loading="lazy">
                         <div class="gallery-dots">
                             <span class="dot active"></span>
                             <span class="dot"></span>
@@ -212,7 +212,7 @@
                 </div>
                 <div class="product-card">
                     <div class="image-gallery">
-                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958259788.webp" alt="Simple Classy Handbag View 1" class="gallery-img active">
+                        <img src="images/feem_2262d5ed1bbe3_IMG_COM_202506031958259788.webp" alt="Simple Classy Handbag View 1" class="gallery-img active" loading="lazy">
                         <div class="gallery-dots">
                             <span class="dot active"></span>
                         </div>
@@ -329,27 +329,25 @@
             <i class="fas fa-shopping-cart"></i>
             <span class="cart-count">0</span>
         </a>
-        <div class="chat-widget">
-            <button class="chat-toggle">
-                <i class="fab fa-whatsapp"></i>
-                <span class="notification-badge">0</span>
-            </button>
-            <div class="chat-container">
-                <div class="chat-header">
-                    <h3>Chat with Seller</h3>
-                    <button class="close-chat"><i class="fas fa-times"></i></button>
+        <button class="floating-whatsapp">
+            <i class="fab fa-whatsapp"></i>
+            <span class="notification-badge">0</span>
+        </button>
+        <div class="chat-container">
+            <div class="chat-header">
+                <h3>Chat with Seller</h3>
+                <button class="close-chat"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-messages">
+                <div class="message system">
+                    Welcome to Jelly Beauty Shop! How can we help you today?
                 </div>
-                <div class="chat-messages">
-                    <div class="message system">
-                        Welcome to Jelly Beauty Shop! How can we help you today?
-                    </div>
-                </div>
-                <div class="chat-input">
-                    <input type="text" placeholder="Type your message...">
-                    <button class="send-message">
-                        <i class="fab fa-whatsapp"></i>
-                    </button>
-                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message...">
+                <button class="send-message">
+                    <i class="fab fa-whatsapp"></i>
+                </button>
             </div>
         </div>
     </div>
