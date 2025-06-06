@@ -1427,7 +1427,7 @@ footer {
 .floating-widgets {
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    left: 20px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -1449,6 +1449,26 @@ footer {
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
+.floating-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #25D366;
+    border: none;
+    border-radius: 50%;
+    color: var(--white);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
 .floating-cart:hover {
     transform: translateY(-3px);
     background-color: var(--accent-color);
@@ -1468,23 +1488,6 @@ footer {
     padding: 2px 6px;
     border-radius: 50%;
     border: 2px solid var(--primary-color);
-}
-
-.floating-whatsapp {
-    position: relative;
-    width: 50px;
-    height: 50px;
-    background-color: #25D366;
-    border: none;
-    border-radius: 50%;
-    color: var(--white);
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
 }
 
 .floating-whatsapp:hover {
