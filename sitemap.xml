@@ -7,21 +7,33 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://jellybeauty.com/#products</loc>
+    <loc>https://jellybeauty.com/products</loc>
     <lastmod>2024-03-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jellybeauty.com/#about</loc>
+    <loc>https://jellybeauty.com/about</loc>
     <lastmod>2024-03-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://jellybeauty.com/#contact</loc>
+    <loc>https://jellybeauty.com/contact</loc>
     <lastmod>2024-03-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jellybeauty.com/shipping</loc>
+    <lastmod>2024-03-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jellybeauty.com/returns</loc>
+    <lastmod>2024-03-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset> 
