@@ -148,7 +148,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const cartCount = document.querySelector('.cart-count');
     const cartOverlay = document.getElementById('cart-overlay');
     const cartItems = document.querySelector('.cart-items');
-    const totalAmount = document.querySelector('.total-amount');
     const floatingCart = document.querySelector('.floating-cart');
 
     // Add to cart functionality
@@ -156,18 +155,50 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', (e) => {
             const productCard = e.target.closest('.product-card');
             const priceText = productCard.querySelector('.price').textContent;
-            const price = parseFloat(priceText.replace(/[^0-9.]/g, '')); // Remove all non-numeric characters except decimal point
+            const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
+            const stockCount = parseInt(productCard.querySelector('.stock-count').textContent);
             
             const product = {
-                id: Date.now(), // Unique ID for the product
+                id: Date.now(),
                 name: productCard.querySelector('h3').textContent,
                 price: price,
-                quantity: parseInt(productCard.querySelector('.quantity-input').value),
-                image: productCard.querySelector('.gallery-img.active').src
+                quantity: 1,
+                maxStock: stockCount,
+                image: productCard.querySelector('img').src
             };
             
             addToCart(product);
             updateCartCount();
+            showCartConfirmation();
+        });
+    });
+
+    // Buy Now functionality
+    document.querySelectorAll('.buy-now').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productCard = e.target.closest('.product-card');
+            const priceText = productCard.querySelector('.price').textContent;
+            const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
+            const stockCount = parseInt(productCard.querySelector('.stock-count').textContent);
+            
+            const product = {
+                id: Date.now(),
+                name: productCard.querySelector('h3').textContent,
+                price: price,
+                quantity: 1,
+                maxStock: stockCount,
+                image: productCard.querySelector('img').src
+            };
+            
+            // Clear cart and add only this product
+            cart = [product];
+            updateCartCount();
+            updateCartDisplay();
+            
+            // Open cart overlay
+            cartOverlay.classList.add('active');
+            
+            // Show confirmation
             showCartConfirmation();
         });
     });
@@ -177,12 +208,36 @@ document.addEventListener('DOMContentLoaded', function() {
         const existingItem = cart.find(item => item.name === product.name);
         
         if (existingItem) {
-            existingItem.quantity += product.quantity;
+            if (existingItem.quantity < existingItem.maxStock) {
+                existingItem.quantity += product.quantity;
+                if (existingItem.quantity > existingItem.maxStock) {
+                    existingItem.quantity = existingItem.maxStock;
+                }
+            } else {
+                showStockLimitMessage();
+            }
         } else {
             cart.push(product);
         }
         
         updateCartDisplay();
+    }
+
+    // Show stock limit message
+    function showStockLimitMessage() {
+        const confirmation = document.createElement('div');
+        confirmation.className = 'cart-confirmation';
+        confirmation.innerHTML = `
+            <div class="confirmation-content">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Stock limit reached!</p>
+            </div>
+        `;
+        document.body.appendChild(confirmation);
+        
+        setTimeout(() => {
+            confirmation.remove();
+        }, 2000);
     }
 
     // Update cart count
@@ -213,6 +268,16 @@ document.addEventListener('DOMContentLoaded', function() {
         cartItems.innerHTML = '';
         let total = 0;
         
+        if (cart.length === 0) {
+            cartItems.innerHTML = `
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Your cart is empty</p>
+                </div>
+            `;
+            return;
+        }
+        
         cart.forEach(item => {
             const itemTotal = item.price * item.quantity;
             total += itemTotal;
@@ -224,10 +289,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="cart-item-details">
                     <h4 class="cart-item-name">${item.name}</h4>
                     <p class="cart-item-price">KES ${item.price.toLocaleString()}</p>
+                    <p class="stock-info">Available: ${item.maxStock} units</p>
                     <div class="cart-item-quantity">
-                        <button class="quantity-btn minus">-</button>
-                        <input type="number" value="${item.quantity}" min="1" readonly>
-                        <button class="quantity-btn plus">+</button>
+                        <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                        <input type="number" value="${item.quantity}" min="1" max="${item.maxStock}" readonly>
+                        <button class="quantity-btn plus" data-id="${item.id}">+</button>
                     </div>
                 </div>
                 <button class="remove-item" data-id="${item.id}">
@@ -237,7 +303,14 @@ document.addEventListener('DOMContentLoaded', function() {
             cartItems.appendChild(cartItem);
         });
         
-        totalAmount.textContent = `KES ${total.toLocaleString()}`;
+        // Update total amount
+        const totalElement = document.querySelector('.cart-total');
+        if (totalElement) {
+            totalElement.innerHTML = `
+                <span>Total:</span>
+                <span>KES ${total.toLocaleString()}</span>
+            `;
+        }
     }
 
     // Toggle cart overlay
@@ -255,18 +328,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle quantity changes in cart
     cartItems.addEventListener('click', (e) => {
         if (e.target.classList.contains('quantity-btn')) {
-            const cartItem = e.target.closest('.cart-item');
-            const itemId = cartItem.querySelector('.remove-item').dataset.id;
-            const item = cart.find(item => item.id === parseInt(itemId));
-            const input = cartItem.querySelector('input');
+            const button = e.target;
+            const itemId = parseInt(button.dataset.id);
+            const item = cart.find(item => item.id === itemId);
             
-            if (e.target.classList.contains('plus')) {
-                item.quantity++;
-            } else if (e.target.classList.contains('minus') && item.quantity > 1) {
-                item.quantity--;
+            if (button.classList.contains('plus')) {
+                if (item.quantity < item.maxStock) {
+                    item.quantity += 1;
+                } else {
+                    showStockLimitMessage();
+                }
+            } else if (button.classList.contains('minus')) {
+                item.quantity = Math.max(1, item.quantity - 1);
             }
             
-            input.value = item.quantity;
             updateCartCount();
             updateCartDisplay();
         }
@@ -287,32 +362,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.target === cartOverlay) {
             cartOverlay.classList.remove('active');
         }
-    });
-
-    // Buy Now functionality
-    document.querySelectorAll('.buy-now').forEach(button => {
-        button.addEventListener('click', function() {
-            const productCard = this.closest('.product-card');
-            const product = {
-                name: productCard.querySelector('h3').textContent,
-                price: productCard.querySelector('.price').textContent,
-                quantity: parseInt(productCard.querySelector('.quantity-input').value),
-                image: productCard.querySelector('.gallery-img.active').src
-            };
-
-            // Clear cart and add only this product
-            cart = [product];
-            updateCartCount();
-            
-            // Show cart and proceed to checkout
-            cartOverlay.classList.add('active');
-            updateCartView();
-            
-            // Automatically click checkout button after a short delay
-            setTimeout(() => {
-                document.querySelector('.checkout-btn').click();
-            }, 500);
-        });
     });
 
     // Quantity selector functionality
