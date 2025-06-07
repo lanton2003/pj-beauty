@@ -81,7 +81,19 @@ body {
 }
 
 .profile-trigger {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    padding: 0.5rem;
     cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.profile-trigger:hover {
+    color: var(--primary-color);
+}
+
+.profile-trigger i {
+    font-size: 1.4rem;
 }
 
 .profile-content {
@@ -181,6 +193,10 @@ body {
 
     .profile-content a {
         padding: 0.5rem 1rem;
+    }
+
+    .profile-trigger i {
+        font-size: 1.2rem;
     }
 }
 
@@ -638,8 +654,16 @@ footer {
 }
 
 .price {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin: 0.3rem 0;
+    color: #2ecc71;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .price {
+        font-size: 1rem;
+    }
 }
 
 /* Product Buttons Container */

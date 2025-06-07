@@ -429,10 +429,30 @@ document.addEventListener('DOMContentLoaded', function() {
     // Checkout button functionality
     document.querySelector('.checkout-btn').addEventListener('click', function() {
         if (cart.length > 0) {
-            alert('Thank you for your purchase! We will contact you shortly.');
+            // Format cart items for WhatsApp message
+            let message = "Hello! I would like to order the following items:\n\n";
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                message += `- ${item.name} (${item.quantity}x) - KES ${itemTotal.toLocaleString()}\n`;
+            });
+            
+            message += `\nTotal: KES ${total.toLocaleString()}`;
+            
+            // Encode the message for WhatsApp URL
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappNumber = '254707041000';
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            // Open WhatsApp in a new tab
+            window.open(whatsappUrl, '_blank');
+            
+            // Clear cart and update display
             cart = [];
             updateCartCount();
-            updateCartView();
+            updateCartDisplay();
             cartOverlay.classList.remove('active');
         }
     });
