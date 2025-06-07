@@ -24,32 +24,60 @@ body {
 /* Header and Navigation */
 .navbar {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    padding: 1rem 5%;
-    background-color: var(--white);
-    box-shadow: var(--shadow);
-    position: fixed;
     width: 100%;
+    position: fixed;
     top: 0;
     z-index: 1000;
+}
+
+.navbar-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 5%;
+    background-color: #808080;
+    box-shadow: var(--shadow);
+    position: relative;
+}
+
+.logo {
+    text-align: center;
+    width: 100%;
 }
 
 .logo h1 {
     color: var(--primary-color);
     font-size: 1.8rem;
     font-weight: 700;
+    text-align: center;
+    margin: 0;
+}
+
+.nav-icons {
+    display: flex;
+    gap: 1.5rem;
+    position: absolute;
+    right: 5%;
+    z-index: 1001;
 }
 
 .nav-links {
     display: flex;
     gap: 2rem;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 5%;
+    background-color: #87CEEB;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .nav-links a {
     text-decoration: none;
-    color: var(--text-color);
+    color: var(--white);
     font-weight: 500;
     transition: color 0.3s ease;
     white-space: nowrap;
@@ -57,20 +85,6 @@ body {
 
 .nav-links a:hover {
     color: var(--primary-color);
-}
-
-.nav-icons {
-    display: flex;
-    gap: 1.5rem;
-    position: relative;
-    z-index: 1001;
-}
-
-.nav-icons a {
-    color: var(--text-color);
-    font-size: 1.2rem;
-    text-decoration: none;
-    position: relative;
 }
 
 .cart-count {
@@ -152,17 +166,15 @@ body {
 
 /* Hero Section */
 #hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
+    background: #808080;
     color: white;
     text-align: center;
-    padding: 20px 0;
-    height: 20vh;
+    padding: 15px 0;
+    height: 15vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 60px;
+    margin-top: 120px;
 }
 
 .hero-content {
@@ -172,14 +184,16 @@ body {
 }
 
 .hero-content h1 {
-    font-size: 1.8rem;
-    margin-bottom: 5px;
-    margin-top: 20px;
+    display: none;
 }
 
 .hero-content p {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
+    font-size: 1.4rem;
+    margin: 0;
+    color: var(--white);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 .cta-button {
@@ -325,7 +339,7 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .navbar {
+    .navbar-top {
         padding: 0.8rem 1rem;
     }
 
@@ -339,7 +353,7 @@ footer {
         top: 60px;
         left: 0;
         width: 100%;
-        background-color: var(--white);
+        background-color: #87CEEB;
         padding: 1rem;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         flex-direction: column;
@@ -352,7 +366,7 @@ footer {
     }
 
     .nav-icons {
-        gap: 1rem;
+        right: 1rem;
     }
 
     .nav-icons a {
@@ -365,7 +379,7 @@ footer {
         background: none;
         border: none;
         font-size: 1.5rem;
-        color: var(--text-color);
+        color: var(--white); /* Changed to white for better contrast */
         cursor: pointer;
         padding: 0.5rem;
     }
@@ -376,7 +390,7 @@ footer {
     }
 
     .hero-content p {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
     /* Product Grid */
@@ -481,6 +495,11 @@ footer {
 
     .dropdown.active .dropdown-trigger::after {
         transform: rotate(180deg);
+    }
+
+    #hero {
+        margin-top: 100px;
+        height: 12vh;
     }
 }
 
@@ -827,8 +846,8 @@ footer {
 }
 
 .dropdown-content a:hover {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
+    background-color: #87CEEB; /* Sky blue hover effect */
+    color: var(--white);
 }
 
 .dropdown-content i {
@@ -1127,20 +1146,31 @@ footer {
 
 .chat-container {
     position: fixed;
-    bottom: 90px;
-    right: 20px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-container.active {
+    display: flex;
+}
+
+.chat-window {
+    position: relative;
     width: 350px;
     height: 500px;
     background: white;
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-    display: none;
+    display: flex;
     flex-direction: column;
     overflow: hidden;
-}
-
-.chat-container.active {
-    display: flex;
 }
 
 .chat-header {
@@ -1244,18 +1274,10 @@ footer {
 
 /* Mobile Responsive Chat */
 @media (max-width: 768px) {
-    .chat-container {
+    .chat-window {
         width: 100%;
         height: 100%;
-        bottom: 0;
-        right: 0;
         border-radius: 0;
-    }
-
-    .chat-toggle {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
     }
 }
 

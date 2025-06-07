@@ -19,8 +19,14 @@
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo">
-                <h1>Jelly Beauty</h1>
+            <div class="navbar-top">
+                <div class="logo">
+                    <h1>Jelly Beauty</h1>
+                </div>
+                <div class="nav-icons">
+                    <a href="#" id="search-toggle"><i class="fas fa-search"></i></a>
+                    <a href="#account"><i class="fas fa-user"></i></a>
+                </div>
             </div>
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
@@ -37,10 +43,6 @@
                         <a href="https://wa.me/254707041000" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                     </div>
                 </div>
-            </div>
-            <div class="nav-icons">
-                <a href="#" id="search-toggle"><i class="fas fa-search"></i></a>
-                <a href="#account"><i class="fas fa-user"></i></a>
             </div>
         </nav>
     </header>
@@ -312,22 +314,22 @@
         <span class="notification-badge">0</span>
     </button>
 
-    <!-- Shared Chat Container -->
+    <!-- Chat Container -->
     <div class="chat-container">
-        <div class="chat-header">
-            <h3>Chat with Seller</h3>
-            <button class="close-chat"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="chat-messages">
-            <div class="message system">
-                Welcome to Jelly Beauty Shop! How can we help you today?
+        <div class="chat-window">
+            <div class="chat-header">
+                <h3>Chat with Us</h3>
+                <button class="close-chat"><i class="fas fa-times"></i></button>
             </div>
-        </div>
-        <div class="chat-input">
-            <input type="text" placeholder="Type your message...">
-            <button class="send-message">
-                <i class="fab fa-whatsapp"></i>
-            </button>
+            <div class="chat-messages">
+                <div class="message system">
+                    Welcome to Jelly Beauty! How can we help you today?
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message...">
+                <button class="send-message"><i class="fas fa-paper-plane"></i></button>
+            </div>
         </div>
     </div>
 
