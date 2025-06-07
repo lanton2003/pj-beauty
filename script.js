@@ -101,7 +101,41 @@ function initImageGalleries() {
 // Initialize when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initImageGalleries();
+    initProfileDropdown();
 });
+
+// Profile Dropdown functionality
+function initProfileDropdown() {
+    const profileTrigger = document.querySelector('.profile-trigger');
+    const profileDropdown = document.querySelector('.profile-dropdown');
+    const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
+
+    // Toggle main dropdown
+    profileTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        profileDropdown.classList.toggle('active');
+    });
+
+    // Toggle nested dropdowns
+    dropdownTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const dropdown = trigger.closest('.dropdown');
+            dropdown.classList.toggle('active');
+        });
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.profile-dropdown')) {
+            profileDropdown.classList.remove('active');
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+}
 
 // Search functionality
 document.addEventListener('DOMContentLoaded', function() {
