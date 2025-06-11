@@ -190,14 +190,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const productCard = e.target.closest('.product-card');
             const priceText = productCard.querySelector('.price').textContent;
             const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
-            const stockCount = parseInt(productCard.querySelector('.stock-count').textContent);
+            const quantity = parseInt(productCard.querySelector('.quantity-input').value);
             
             const product = {
                 id: Date.now(),
                 name: productCard.querySelector('h3').textContent,
                 price: price,
-                quantity: 1,
-                maxStock: stockCount,
+                quantity: quantity,
                 image: productCard.querySelector('img').src
             };
             
@@ -213,14 +212,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const productCard = e.target.closest('.product-card');
             const priceText = productCard.querySelector('.price').textContent;
             const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
-            const stockCount = parseInt(productCard.querySelector('.stock-count').textContent);
+            const quantity = parseInt(productCard.querySelector('.quantity-input').value);
             
             const product = {
                 id: Date.now(),
                 name: productCard.querySelector('h3').textContent,
                 price: price,
-                quantity: 1,
-                maxStock: stockCount,
+                quantity: quantity,
                 image: productCard.querySelector('img').src
             };
             
@@ -242,14 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const existingItem = cart.find(item => item.name === product.name);
         
         if (existingItem) {
-            if (existingItem.quantity < existingItem.maxStock) {
-                existingItem.quantity += product.quantity;
-                if (existingItem.quantity > existingItem.maxStock) {
-                    existingItem.quantity = existingItem.maxStock;
-                }
-            } else {
-                showStockLimitMessage();
-            }
+            existingItem.quantity += product.quantity;
         } else {
             cart.push(product);
         }
@@ -323,10 +314,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="cart-item-details">
                     <h4 class="cart-item-name">${item.name}</h4>
                     <p class="cart-item-price">KES ${item.price.toLocaleString()}</p>
-                    <p class="stock-info">Available: ${item.maxStock} units</p>
+                    <p class="stock-info">Available: ${item.quantity} units</p>
                     <div class="cart-item-quantity">
                         <button class="quantity-btn minus" data-id="${item.id}">-</button>
-                        <input type="number" value="${item.quantity}" min="1" max="${item.maxStock}" readonly>
+                        <input type="number" value="${item.quantity}" min="1" readonly>
                         <button class="quantity-btn plus" data-id="${item.id}">+</button>
                     </div>
                 </div>
@@ -367,11 +358,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const item = cart.find(item => item.id === itemId);
             
             if (button.classList.contains('plus')) {
-                if (item.quantity < item.maxStock) {
-                    item.quantity += 1;
-                } else {
-                    showStockLimitMessage();
-                }
+                item.quantity += 1;
             } else if (button.classList.contains('minus')) {
                 item.quantity = Math.max(1, item.quantity - 1);
             }
@@ -403,7 +390,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const minusBtn = selector.querySelector('.minus');
         const plusBtn = selector.querySelector('.plus');
         const input = selector.querySelector('.quantity-input');
-        const stockCount = parseInt(selector.closest('.product-card').querySelector('.stock-count').textContent);
 
         minusBtn.addEventListener('click', () => {
             let value = parseInt(input.value);
@@ -414,15 +400,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         plusBtn.addEventListener('click', () => {
             let value = parseInt(input.value);
-            if (value < stockCount) {
-                input.value = value + 1;
-            }
+            input.value = value + 1;
         });
 
         input.addEventListener('change', () => {
             let value = parseInt(input.value);
             if (value < 1) input.value = 1;
-            if (value > stockCount) input.value = stockCount;
         });
     });
 
