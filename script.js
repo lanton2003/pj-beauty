@@ -183,21 +183,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const cartOverlay = document.getElementById('cart-overlay');
     const cartItems = document.querySelector('.cart-items');
     const floatingCart = document.querySelector('.floating-cart');
+    const closeCart = document.querySelector('.close-cart');
+    const cartTotal = document.querySelector('.cart-total span:last-child');
+    const checkoutBtn = document.querySelector('.checkout-btn');
+
+    // Toggle cart overlay
+    floatingCart.addEventListener('click', (e) => {
+        e.preventDefault();
+        cartOverlay.classList.add('active');
+    });
+
+    closeCart.addEventListener('click', () => {
+        cartOverlay.classList.remove('active');
+    });
 
     // Add to cart functionality
     document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', (e) => {
             const productCard = e.target.closest('.product-card');
-            const priceText = productCard.querySelector('.price').textContent;
-            const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
             const quantity = parseInt(productCard.querySelector('.quantity-input').value);
             
             const product = {
                 id: Date.now(),
                 name: productCard.querySelector('h3').textContent,
-                price: price,
                 quantity: quantity,
-                image: productCard.querySelector('img').src
+                image: productCard.querySelector('.gallery-img.active').src
             };
             
             addToCart(product);
@@ -210,16 +220,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.buy-now').forEach(button => {
         button.addEventListener('click', (e) => {
             const productCard = e.target.closest('.product-card');
-            const priceText = productCard.querySelector('.price').textContent;
-            const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
             const quantity = parseInt(productCard.querySelector('.quantity-input').value);
             
             const product = {
                 id: Date.now(),
                 name: productCard.querySelector('h3').textContent,
-                price: price,
                 quantity: quantity,
-                image: productCard.querySelector('img').src
+                image: productCard.querySelector('.gallery-img.active').src
             };
             
             // Clear cart and add only this product
@@ -248,23 +255,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCartDisplay();
     }
 
-    // Show stock limit message
-    function showStockLimitMessage() {
-        const confirmation = document.createElement('div');
-        confirmation.className = 'cart-confirmation';
-        confirmation.innerHTML = `
-            <div class="confirmation-content">
-                <i class="fas fa-exclamation-circle"></i>
-                <p>Stock limit reached!</p>
-            </div>
-        `;
-        document.body.appendChild(confirmation);
-        
-        setTimeout(() => {
-            confirmation.remove();
-        }, 2000);
-    }
-
     // Update cart count
     function updateCartCount() {
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -275,14 +265,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function showCartConfirmation() {
         const confirmation = document.createElement('div');
         confirmation.className = 'cart-confirmation';
-        confirmation.innerHTML = `
-            <div class="confirmation-content">
-                <i class="fas fa-check-circle"></i>
-                <p>Item added to cart!</p>
-            </div>
-        `;
+        confirmation.textContent = 'Item added to cart!';
         document.body.appendChild(confirmation);
-        
+
         setTimeout(() => {
             confirmation.remove();
         }, 2000);
@@ -291,33 +276,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update cart display
     function updateCartDisplay() {
         cartItems.innerHTML = '';
-        let total = 0;
         
         if (cart.length === 0) {
-            cartItems.innerHTML = `
-                <div class="empty-cart">
-                    <i class="fas fa-shopping-cart"></i>
-                    <p>Your cart is empty</p>
-                </div>
-            `;
+            cartItems.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
             return;
         }
-        
+
         cart.forEach(item => {
-            const itemTotal = item.price * item.quantity;
-            total += itemTotal;
-            
             const cartItem = document.createElement('div');
             cartItem.className = 'cart-item';
             cartItem.innerHTML = `
-                <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                <img src="${item.image}" alt="${item.name}">
                 <div class="cart-item-details">
-                    <h4 class="cart-item-name">${item.name}</h4>
-                    <p class="cart-item-price">KES ${item.price.toLocaleString()}</p>
-                    <p class="stock-info">Available: ${item.quantity} units</p>
+                    <h4>${item.name}</h4>
                     <div class="cart-item-quantity">
                         <button class="quantity-btn minus" data-id="${item.id}">-</button>
-                        <input type="number" value="${item.quantity}" min="1" readonly>
+                        <span>${item.quantity}</span>
                         <button class="quantity-btn plus" data-id="${item.id}">+</button>
                     </div>
                 </div>
@@ -327,118 +301,70 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             cartItems.appendChild(cartItem);
         });
-        
-        // Update total amount
-        const totalElement = document.querySelector('.cart-total');
-        if (totalElement) {
-            totalElement.innerHTML = `
-                <span>Total:</span>
-                <span>KES ${total.toLocaleString()}</span>
-            `;
-        }
+
+        // Add event listeners for quantity buttons
+        cartItems.querySelectorAll('.quantity-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const itemId = parseInt(e.target.dataset.id);
+                const item = cart.find(item => item.id === itemId);
+                
+                if (e.target.classList.contains('plus')) {
+                    item.quantity++;
+                } else if (e.target.classList.contains('minus')) {
+                    if (item.quantity > 1) {
+                        item.quantity--;
+                    }
+                }
+                
+                updateCartDisplay();
+                updateCartCount();
+            });
+        });
+
+        // Add event listeners for remove buttons
+        cartItems.querySelectorAll('.remove-item').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const itemId = parseInt(e.target.closest('.remove-item').dataset.id);
+                cart = cart.filter(item => item.id !== itemId);
+                updateCartDisplay();
+                updateCartCount();
+            });
+        });
     }
 
-    // Toggle cart overlay
-    floatingCart.addEventListener('click', (e) => {
-        e.preventDefault();
-        cartOverlay.classList.toggle('active');
+    // Checkout functionality
+    checkoutBtn.addEventListener('click', () => {
+        if (cart.length === 0) {
+            alert('Your cart is empty!');
+            return;
+        }
+        
+        // Format cart items for WhatsApp message
+        let message = "Hello! I would like to order the following items:\n\n";
+        
+        cart.forEach(item => {
+            message += `- ${item.name} (${item.quantity}x)\n`;
+        });
+        
+        message += "\nPlease contact me to complete the order.";
+        
+        // Encode the message for WhatsApp URL
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappNumber = '254707041000';
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+        
+        // Open WhatsApp in a new tab
+        window.open(whatsappUrl, '_blank');
+        
+        // Clear the cart
+        cart = [];
         updateCartDisplay();
-    });
-
-    // Close cart overlay
-    document.querySelector('.close-cart').addEventListener('click', () => {
+        updateCartCount();
         cartOverlay.classList.remove('active');
     });
 
-    // Handle quantity changes in cart
-    cartItems.addEventListener('click', (e) => {
-        if (e.target.classList.contains('quantity-btn')) {
-            const button = e.target;
-            const itemId = parseInt(button.dataset.id);
-            const item = cart.find(item => item.id === itemId);
-            
-            if (button.classList.contains('plus')) {
-                item.quantity += 1;
-            } else if (button.classList.contains('minus')) {
-                item.quantity = Math.max(1, item.quantity - 1);
-            }
-            
-            updateCartCount();
-            updateCartDisplay();
-        }
-    });
-
-    // Remove item from cart
-    cartItems.addEventListener('click', (e) => {
-        if (e.target.closest('.remove-item')) {
-            const itemId = parseInt(e.target.closest('.remove-item').dataset.id);
-            cart = cart.filter(item => item.id !== itemId);
-            updateCartCount();
-            updateCartDisplay();
-        }
-    });
-
-    // Close cart when clicking outside
-    cartOverlay.addEventListener('click', (e) => {
-        if (e.target === cartOverlay) {
-            cartOverlay.classList.remove('active');
-        }
-    });
-
-    // Quantity selector functionality
-    document.querySelectorAll('.quantity-selector').forEach(selector => {
-        const minusBtn = selector.querySelector('.minus');
-        const plusBtn = selector.querySelector('.plus');
-        const input = selector.querySelector('.quantity-input');
-
-        minusBtn.addEventListener('click', () => {
-            let value = parseInt(input.value);
-            if (value > 1) {
-                input.value = value - 1;
-            }
-        });
-
-        plusBtn.addEventListener('click', () => {
-            let value = parseInt(input.value);
-            input.value = value + 1;
-        });
-
-        input.addEventListener('change', () => {
-            let value = parseInt(input.value);
-            if (value < 1) input.value = 1;
-        });
-    });
-
-    // Checkout button functionality
-    document.querySelector('.checkout-btn').addEventListener('click', function() {
-        if (cart.length > 0) {
-            // Format cart items for WhatsApp message
-            let message = "Hello! I would like to order the following items:\n\n";
-            let total = 0;
-            
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                message += `- ${item.name} (${item.quantity}x) - KES ${itemTotal.toLocaleString()}\n`;
-            });
-            
-            message += `\nTotal: KES ${total.toLocaleString()}`;
-            
-            // Encode the message for WhatsApp URL
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappNumber = '254707041000';
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-            
-            // Open WhatsApp in a new tab
-            window.open(whatsappUrl, '_blank');
-            
-            // Clear cart and update display
-            cart = [];
-            updateCartCount();
-            updateCartDisplay();
-            cartOverlay.classList.remove('active');
-        }
-    });
+    // Initialize cart display
+    updateCartDisplay();
 });
 
 // Mobile Menu Toggle
