@@ -212,13 +212,13 @@ body {
 
 /* Search Overlay */
 .search-overlay {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: none;
+    background-color: rgba(0, 0, 0, 0.9);
     z-index: 1000;
 }
 
@@ -229,50 +229,71 @@ body {
     padding: 20px;
 }
 
+.close-search {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+.close-search:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
 .search-input-group {
     display: flex;
-    align-items: center;
-    background: white;
-    border-radius: 30px;
-    padding: 5px 15px;
     position: relative;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .search-input-group input {
     flex: 1;
+    padding: 15px;
+    padding-right: 50px;
+    font-size: 1.1rem;
     border: none;
-    padding: 10px;
-    font-size: 16px;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
     outline: none;
-    background: transparent;
-    padding-left: 40px; /* Make space for the X button */
+}
+
+.search-input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .search-btn {
-    background: none;
-    border: none;
-    color: #333;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-.close-search {
     position: absolute;
-    left: 15px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
-    color: #333;
-    font-size: 20px;
+    color: white;
     cursor: pointer;
-    padding: 5px;
-    z-index: 1;
+    font-size: 1.2rem;
+    padding: 0;
+    transition: color 0.3s;
 }
 
-.close-search:hover {
-    color: #666;
+.search-btn:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.search-results {
+    color: white;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 20px;
 }
 
 /* Hero Section */
@@ -910,27 +931,20 @@ footer {
     cursor: pointer;
 }
 
-/* Dropdown Styles */
+/* Contact Dropdown Styles */
 .dropdown {
     position: relative;
-    display: inline-block;
-}
-
-.dropdown-trigger {
-    cursor: pointer;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    top: 100%;
     left: 0;
-    background-color: var(--white);
+    top: 100%;
+    background-color: #333;
     min-width: 200px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    z-index: 1000;
-    padding: 0.5rem 0;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
 }
 
 .dropdown:hover .dropdown-content {
@@ -938,20 +952,19 @@ footer {
 }
 
 .dropdown-content a {
-    color: var(--text-color);
-    padding: 0.8rem 1rem;
+    color: white;
+    padding: 12px 16px;
     text-decoration: none;
     display: block;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 .dropdown-content a:hover {
-    background-color: #87CEEB; /* Sky blue hover effect */
-    color: var(--white);
+    background-color: #444;
 }
 
 .dropdown-content i {
-    margin-right: 8px;
+    margin-right: 10px;
     width: 20px;
     text-align: center;
 }
@@ -1043,16 +1056,16 @@ footer {
     cursor: pointer;
 }
 
-/* Cart View Styles */
+/* Cart Overlay */
 .cart-overlay {
+    display: none;
     position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 1001;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 }
 
 .cart-overlay.active {
@@ -1061,16 +1074,21 @@ footer {
 
 .cart-container {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    background-color: var(--white);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 500px;
-    max-height: 80vh;
     overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.cart-overlay.active .cart-container {
+    transform: translateX(0);
 }
 
 .cart-header {
@@ -1084,6 +1102,7 @@ footer {
 
 .cart-header h2 {
     margin: 0;
+    font-size: 1.5rem;
     color: var(--text-color);
 }
 
@@ -1091,8 +1110,9 @@ footer {
     background: none;
     border: none;
     font-size: 1.5rem;
-    color: var(--text-color);
     cursor: pointer;
+    color: var(--text-color);
+    padding: 5px;
 }
 
 .cart-items {
@@ -1102,118 +1122,239 @@ footer {
 .cart-item {
     display: flex;
     align-items: center;
-    padding: 1rem;
+    padding: 15px;
     border-bottom: 1px solid #eee;
-    gap: 1rem;
+    gap: 15px;
 }
 
-.cart-item img {
-    width: 60px;
-    height: 60px;
+.cart-item .item-image {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+.cart-item .item-image img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: 8px;
 }
 
-.cart-item-details {
-    flex: 1;
+.cart-item .item-details {
+    flex-grow: 1;
 }
 
-.cart-item-details h4 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1rem;
+.cart-item .item-details h4 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.cart-item .item-details p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.cart-item .remove-item {
+    background: none;
+    border: none;
+    color: #ff4444;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.cart-item .remove-item:hover {
+    color: #cc0000;
 }
 
 .cart-item-quantity {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-}
-
-.cart-item-quantity button {
-    background: none;
-    border: 1px solid #ddd;
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.cart-item-quantity span {
-    min-width: 30px;
-    text-align: center;
-}
-
-.remove-item {
-    background: none;
-    border: none;
-    color: #ff4444;
-    cursor: pointer;
-    padding: 0.5rem;
+    gap: 10px;
 }
 
 .cart-summary {
-    padding: 1rem;
+    margin-top: 20px;
+    padding-top: 20px;
     border-top: 1px solid #eee;
 }
 
 .checkout-btn {
     width: 100%;
-    padding: 1rem;
+    padding: 12px;
     background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1rem;
-    font-weight: 600;
     transition: background-color 0.3s ease;
 }
 
 .checkout-btn:hover {
-    background-color: var(--accent-color);
+    background-color: #d4006a;
 }
 
-.empty-cart {
-    text-align: center;
-    padding: 2rem;
-    color: var(--light-text);
+/* Chat Container */
+.chat-container {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 350px;
+    height: 500px;
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    overflow: hidden;
 }
 
-.empty-cart i {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: #ddd;
+.chat-container.active {
+    display: block;
 }
 
-/* Chat Widget Styles */
-.chat-widget {
+.chat-window {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.chat-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.close-chat {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin-bottom: 5px;
+}
+
+.message.system {
+    background-color: #f0f0f0;
+    color: var(--text-color);
+    align-self: center;
+}
+
+.message.user {
+    background-color: var(--primary-color);
+    color: white;
+    align-self: flex-end;
+}
+
+.message.seller {
+    background-color: #e9ecef;
+    color: var(--text-color);
+    align-self: flex-start;
+}
+
+.chat-input {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+}
+
+.chat-input input:focus {
+    border-color: var(--primary-color);
+}
+
+.send-message {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.send-message:hover {
+    background-color: #d4006a;
+}
+
+/* Floating Widgets */
+.floating-widgets {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    z-index: 999;
 }
 
-.chat-toggle {
-    width: 60px;
-    height: 60px;
+.floating-cart,
+.floating-whatsapp {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background: #25D366;
-    border: none;
+    background: #87CEEB;
     color: white;
-    font-size: 2rem;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
+    position: relative;
+    border: none;
+    cursor: pointer;
 }
 
-.chat-toggle:hover {
+.floating-whatsapp {
+    background: #25D366; /* WhatsApp green color */
+}
+
+.floating-cart:hover,
+.floating-whatsapp:hover {
     transform: scale(1.1);
 }
 
+.cart-count,
 .notification-badge {
     position: absolute;
     top: -5px;
@@ -1223,632 +1364,24 @@ footer {
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    font-size: 0.7rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    display: none;
+    font-size: 12px;
+    font-weight: bold;
 }
 
-.chat-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-}
-
-.chat-container.active {
-    display: flex;
-}
-
-.chat-window {
-    position: relative;
-    width: 350px;
-    height: 500px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.chat-header {
-    background: #25D366;
-    color: white;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.chat-header h3 {
-    margin: 0;
-    font-size: 1.1rem;
-}
-
-.close-chat {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.chat-messages {
-    flex: 1;
-    padding: 15px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.message {
-    max-width: 80%;
-    padding: 10px 15px;
-    border-radius: 15px;
-    font-size: 0.9rem;
-    line-height: 1.4;
-}
-
-.message.system {
-    background: #f0f0f0;
-    color: #333;
-    align-self: center;
-    border-radius: 20px;
-}
-
-.message.user {
-    background: #DCF8C6;
-    color: #333;
-    align-self: flex-end;
-    border-bottom-right-radius: 5px;
-}
-
-.message.seller {
-    background: #E8E8E8;
-    color: #333;
-    align-self: flex-start;
-    border-bottom-left-radius: 5px;
-}
-
-.chat-input {
-    padding: 15px;
-    border-top: 1px solid #eee;
-    display: flex;
-    gap: 10px;
-}
-
-.chat-input input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    font-size: 0.9rem;
-}
-
-.chat-input input:focus {
-    outline: none;
-    border-color: #25D366;
-}
-
-.send-message {
-    background: #25D366;
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-}
-
-.send-message:hover {
-    background: #128C7E;
-}
-
-/* Mobile Responsive Chat */
-@media (max-width: 768px) {
-    .chat-window {
-        width: 100%;
-        height: 100%;
-        border-radius: 0;
-    }
-}
-
-/* Featured Collection Section */
-#featured-collection {
-    padding: 4rem 2rem;
-    background-color: #f8f9fa;
-}
-
-#featured-collection h2 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #333;
-    font-size: 2rem;
-}
-
-.collection-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Desktop View */
-.desktop-view {
-    display: block;
-}
-
-.collection-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-}
-
-.collection-item {
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.collection-item:hover {
-    transform: translateY(-5px);
-}
-
-.collection-item img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-}
-
-.collection-info {
-    padding: 1.5rem;
-    text-align: center;
-}
-
-.collection-info h3 {
-    margin-bottom: 0.5rem;
-    color: #333;
-}
-
-.collection-info p {
-    color: #666;
-    margin-bottom: 1rem;
-}
-
-.view-collection {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.view-collection:hover {
-    background-color: #0056b3;
-}
-
-/* Mobile View */
-.mobile-view {
-    display: none;
-}
-
-.collection-carousel {
-    position: relative;
-    overflow: hidden;
-}
-
-.carousel-track {
-    display: flex;
-    transition: transform 0.3s ease;
-}
-
-.carousel-slide {
-    min-width: 100%;
-    padding: 0 1rem;
-}
-
-.carousel-slide img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.carousel-dots {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-    gap: 0.5rem;
-}
-
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #ccc;
-    cursor: pointer;
-}
-
-.dot.active {
-    background-color: #007bff;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .desktop-view {
-        display: none;
-    }
-
-    .mobile-view {
-        display: block;
-    }
-
-    #featured-collection {
-        padding: 2rem 1rem;
-    }
-
-    .collection-info {
-        padding: 1rem;
-    }
-}
-
-/* Remove Featured Collection Section */
-#featured-collection,
-.collection-container,
-.desktop-view,
-.collection-grid,
-.collection-item,
-.collection-info,
-.view-collection,
-.mobile-view,
-.collection-carousel,
-.carousel-track,
-.carousel-slide,
-.carousel-dots {
-    display: none;
-}
-
-/* Remove Newsletter Section */
-#newsletter,
-.newsletter-content,
-.newsletter-form {
-    display: none;
-}
-
-/* Floating Widgets */
-.floating-widgets {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 1000;
-}
-
-.floating-cart {
-    position: relative;
-    width: 50px;
-    height: 50px;
-    background-color: var(--primary-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    text-decoration: none;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.floating-whatsapp {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    width: 50px;
-    height: 50px;
-    background: #25D366;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    cursor: pointer;
-    z-index: 1000;
-    transition: all 0.3s ease;
-}
-
-.floating-whatsapp.hidden {
-    display: none !important;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-.floating-whatsapp:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
-
-.floating-cart:hover {
-    transform: translateY(-3px);
-    background-color: var(--accent-color);
-}
-
-.floating-cart i {
-    font-size: 1.5rem;
-}
-
-.floating-cart .cart-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: var(--white);
-    color: var(--primary-color);
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    border-radius: 50%;
-    border: 2px solid var(--primary-color);
-}
-
-.floating-whatsapp .notification-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: #ff4444;
-    color: white;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    font-size: 0.7rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    display: none;
-}
-
-.chat-container {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 350px;
-    height: 500px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.chat-container.active {
-    display: flex;
-}
-
-.chat-header {
-    background: #25D366;
-    color: white;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.chat-header h3 {
-    margin: 0;
-    font-size: 1.1rem;
-}
-
-.close-chat {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.chat-messages {
-    flex: 1;
-    padding: 15px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.message {
-    max-width: 80%;
-    padding: 10px 15px;
-    border-radius: 15px;
-    font-size: 0.9rem;
-    line-height: 1.4;
-}
-
-.message.system {
-    background: #f0f0f0;
-    color: #333;
-    align-self: center;
-    border-radius: 20px;
-}
-
-.message.user {
-    background: #DCF8C6;
-    color: #333;
-    align-self: flex-end;
-    border-bottom-right-radius: 5px;
-}
-
-.message.seller {
-    background: #E8E8E8;
-    color: #333;
-    align-self: flex-start;
-    border-bottom-left-radius: 5px;
-}
-
-.chat-input {
-    padding: 15px;
-    border-top: 1px solid #eee;
-    display: flex;
-    gap: 10px;
-}
-
-.chat-input input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    font-size: 0.9rem;
-}
-
-.chat-input input:focus {
-    outline: none;
-    border-color: #25D366;
-}
-
-.send-message {
-    background: #25D366;
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-}
-
-.send-message:hover {
-    background: #128C7E;
-}
-
-/* Mobile Responsive Chat and Floating Widgets */
+/* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .floating-widgets {
-        left: 10px;
-        bottom: 10px;
+        bottom: 15px;
+        right: 15px;
     }
 
-    .floating-cart {
-        width: 45px;
-        height: 45px;
-    }
-
-    .floating-cart i {
-        font-size: 1.2rem;
-    }
-
+    .floating-cart,
     .floating-whatsapp {
         width: 45px;
         height: 45px;
-        right: 10px;
-        bottom: 10px;
-    }
-
-    .floating-whatsapp.hidden {
-        display: none !important;
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-    }
-
-    .chat-container {
-        width: 100%;
-        height: 100%;
-        right: 0;
-        bottom: 0;
-        border-radius: 0;
-    }
-
-    .chat-container.active {
-        transform: translateY(0);
-    }
-
-    .cart-overlay {
-        width: 100%;
-        height: 100%;
-        right: 0;
-        bottom: 0;
-        border-radius: 0;
-    }
-
-    .cart-overlay.active {
-        transform: translateY(0);
-    }
-}
-
-/* Small Mobile Devices */
-@media (max-width: 480px) {
-    .floating-widgets {
-        left: 5px;
-        bottom: 5px;
-    }
-
-    .floating-cart {
-        width: 40px;
-        height: 40px;
-    }
-
-    .floating-cart i {
-        font-size: 1.1rem;
-    }
-
-    .floating-whatsapp {
-        width: 40px;
-        height: 40px;
-        right: 5px;
-        bottom: 5px;
-    }
-
-    .floating-whatsapp.hidden {
-        display: none !important;
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-    }
-
-    .chat-container {
-        width: 100%;
-        height: 100%;
-        right: 0;
-        bottom: 0;
-        border-radius: 0;
-    }
-
-    .chat-container.active {
-        transform: translateY(0);
-    }
-
-    .cart-overlay {
-        width: 100%;
-        height: 100%;
-        right: 0;
-        bottom: 0;
-        border-radius: 0;
-    }
-
-    .cart-overlay.active {
-        transform: translateY(0);
     }
 }
 
@@ -1934,5 +1467,203 @@ footer {
     [data-tooltip]:before {
         white-space: normal;
         width: 200px;
+    }
+}
+
+/* Header Styles */
+.main-header {
+    background-color: #333;
+    padding: 1rem;
+    color: white;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.shop-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.header-icons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.icon-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+/* Menu Dropdown */
+.menu-dropdown {
+    position: relative;
+}
+
+.menu-trigger {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    min-width: 200px;
+    display: none;
+    z-index: 1000;
+}
+
+.menu-content.active {
+    display: block;
+}
+
+.menu-content a {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.menu-content a:hover {
+    background-color: #f5f5f5;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    min-width: 200px;
+    display: none;
+    z-index: 1001;
+    margin-top: -40px;
+}
+
+.dropdown.active .dropdown-content {
+    display: block;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .menu-content {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: white;
+        z-index: 1000;
+        padding: 20px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .menu-content.active {
+        transform: translateX(0);
+    }
+
+    .dropdown-content {
+        position: static;
+        box-shadow: none;
+        padding-left: 20px;
+        display: none;
+        margin-top: 0;
+    }
+
+    .dropdown.active .dropdown-content {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-cart,
+    .floating-whatsapp {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Contact Dropdown Styles */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #333;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #444;
+}
+
+.dropdown-content i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Floating Emoji Animation */
+.floating-emoji {
+    position: fixed;
+    font-size: 2rem;
+    pointer-events: none;
+    z-index: 9999;
+    animation: float-up 2s ease-out forwards;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) scale(1.5);
+        opacity: 0;
     }
 } 
